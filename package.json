@@ -1,0 +1,25 @@
+{
+  "name": "@erkobridee/helpers",
+  "version": "0.0.0",
+  "description": "useful code helpers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erkobridee/helpers.git"
+  },
+  "keywords": [
+    "javascript",
+    "library",
+    "helpers",
+    "typescript"
+  ],
+  "author": "Erko Bridee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erkobridee/helpers/issues"
+  },
+  "homepage": "https://github.com/erkobridee/helpers#readme"
+}
