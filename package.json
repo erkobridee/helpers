@@ -1,6 +1,6 @@
 {
   "name": "@erkobridee/helpers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "useful code helpers",
   "buildConfig": {
     "libraryName": "Helpers",
