@@ -11,18 +11,27 @@ import { terser } from 'rollup-plugin-terser';
 
 //----------------------------------------------------------------------------//
 
-const isString = (value) => value && typeof value === 'string';
-const capitalize = (value) =>
-  !isString(value) ? '' : value.replace(/^\w/, (c) => c.toUpperCase());
+import pkg from './package.json';
 
-const libraryName = 'helpers';
-const outputDir = 'dist-pack';
-const bundleDir = 'dist';
-const declarationDir = 'types';
-const bundleEntry = 'src/index.ts';
-const moduleEntries = ['src/sample1/index.ts', 'src/sample2/index.ts'];
+//----------------------------------------------------------------------------//
 
-const browserLibraryName = capitalize(libraryName);
+const defaultBuildConfig = {
+  libraryName: 'MyLibrary',
+  outputDir: 'dist-pack',
+  bundleDir: 'dist',
+  declarationDir: 'types',
+  bundleEntry: 'src/index.ts',
+  moduleEntries: [],
+};
+
+const {
+  libraryName,
+  outputDir,
+  bundleDir,
+  declarationDir,
+  bundleEntry,
+  moduleEntries = [],
+} = { ...defaultBuildConfig, ...(pkg.buildConfig || {}) };
 
 const tsPluginConfig = {
   useTsconfigDeclarationDir: true,
@@ -57,27 +66,27 @@ const bundleConfig = {
     {
       file: `${outputDir}/${bundleDir}/umd.js`,
       format: 'umd',
-      name: browserLibraryName,
+      name: libraryName,
       exports: 'named',
     },
     {
       file: `${outputDir}/${bundleDir}/umd-dev.js`,
       format: 'umd',
-      name: browserLibraryName,
+      name: libraryName,
       exports: 'named',
       sourcemap: true,
     },
     {
       file: `${outputDir}/${bundleDir}/umd.min.js`,
       format: 'umd',
-      name: browserLibraryName,
+      name: libraryName,
       exports: 'named',
       plugins: [terser()],
     },
     {
       file: `${outputDir}/${bundleDir}/umd-dev.min.js`,
       format: 'umd',
-      name: browserLibraryName,
+      name: libraryName,
       exports: 'named',
       sourcemap: true,
       plugins: [terser()],
@@ -98,4 +107,6 @@ const modulesConfig = {
   plugins: rollupCommonPlugins,
 };
 
-export default [bundleConfig, modulesConfig];
+export default moduleEntries.length > 0
+  ? [bundleConfig, modulesConfig]
+  : bundleConfig;
